@@ -25,7 +25,10 @@
 - Также, вы можете изменить порт для доступа к сайту:
   - ports:
   - "<ваш порт>:80"
-- В директории проекта выполнить команду docker-compose up -d
+- В директории проекта выполнить команды
+  - docker-compose build
+  - docker-compose up -d
+  - docker-compose exec php composer install
 - Сайт будет доступен по адресу localhost:<ваш порт>
 
 ### [OpenApi спецификация](openapi.yaml)
