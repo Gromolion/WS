@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: WS-project
+  description: This is a training project for an internship at WS.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:{port}/api/v1"
+    description: Production
+paths:
+  /auth:
+    post:
+      description: Authorization page
+      requestBody:
+        description: User data for authorization
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: Successful authorization
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: Error
+  /register:
+    post:
+      description: Registration page
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: Successful registration
+          content:
+            application/json:
+              schema: 
+                type: string
+        '400':
+          description: Registration error
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: Error
+  /logout:
+    get:
+      description: Logout
+      responses:
+        '200':
+          description: Successful logout
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: Error
+  /profile:
+    get:
+      description: User's profile
+      parameters:
+        - name: id
+          in: query
+          description: User's id
+          required: true
+      responses:
+        '200':
+          description: Show user's proifle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  anyOf:
+                    - type: integer
+                    - type: string
+        default:
+          description: Error
