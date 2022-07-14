@@ -6,38 +6,51 @@ info:
 servers:
   - url: "http://localhost:{port}/api/v1"
     description: Production
+tags:
+  - name: user
+    description: User's pages
 paths:
   /auth:
     post:
+      tags:
+        - user
       description: Authorization page
       requestBody:
-        description: User data for authorization
-        required: true
         content:
           application/json:
             schema:
               type: array
               items:
                 type: string
+            example:
+              email: test@test.com
+              password: qwerty
       responses:
         '200':
           description: Successful authorization
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   type: string
+              example:
+                success: true
+                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2...'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 type: string
+              example:
+                success: false
         default:
           description: Error
   /register:
     post:
+      tags:
+        - user
       description: Registration page
       requestBody:
         content:
@@ -46,23 +59,33 @@ paths:
               type: array
               items:
                 type: string
+            example:
+              name: admin
+              email: test@test.com
+              password: qwerty
       responses:
         '200':
           description: Successful registration
           content:
             application/json:
-              schema: 
+              schema:
                 type: string
+              example:
+                success: true
         '400':
           description: Registration error
           content:
             application/json:
               schema:
                 type: string
+              example:
+                success: false
         default:
           description: Error
   /logout:
     get:
+      tags:
+        - user
       description: Logout
       responses:
         '200':
@@ -71,16 +94,23 @@ paths:
             application/json:
               schema:
                 type: string
+              example:
+                success: true
         default:
           description: Error
   /profile:
     get:
+      tags:
+        - user
       description: User's profile
       parameters:
         - name: id
           in: query
+          schema:
+            type: integer
           description: User's id
           required: true
+          example: 18
       responses:
         '200':
           description: Show user's proifle
@@ -92,5 +122,9 @@ paths:
                   anyOf:
                     - type: integer
                     - type: string
+              example:
+                id: 18
+                name: Tony
+                gender: male
         default:
           description: Error
